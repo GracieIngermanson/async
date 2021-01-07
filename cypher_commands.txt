@@ -1,0 +1,4 @@
+LOAD CSV WITH HEADERS FROM 'https://drive.google.com/file/d/1oLS8CRVf8NIAq58hJEpHOCpj0YVI525R' AS row
+WITH row WHERE row.id IS NOT null
+MERGE (robot:Robot {id: row.id})
+  ON CREATE SET robot.fuelLevel = toInteger(row.fuelLevel)
