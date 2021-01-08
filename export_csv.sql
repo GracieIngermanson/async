@@ -1,3 +1,3 @@
-COPY (SELECT * FROM robots) TO '/tmp/robots.csv' WITH CSV header;
-COPY (SELECT * FROM projects) TO '/tmp/projects.csv' WITH CSV header;
-COPY (SELECT * FROM schedule)  TO '/tmp/schedule.csv' WITH CSV header;
+COPY (SELECT * FROM robots) TO '/Users/gracie/Documents/Junior/async/robots.csv' WITH CSV header;
+COPY (SELECT * FROM projects) TO '/Users/gracie/Documents/Junior/async/projects.csv' WITH CSV header;
+COPY (SELECT * FROM schedule)  TO '/Users/gracie/Documents/Junior/async/schedule.csv' WITH CSV header;

@@ -1,4 +1,19 @@
-LOAD CSV WITH HEADERS FROM 'https://drive.google.com/file/d/1oLS8CRVf8NIAq58hJEpHOCpj0YVI525R' AS row
-WITH row WHERE row.id IS NOT null
+
+
+LOAD CSV WITH HEADERS FROM 'https://raw.githubusercontent.com/GracieIngermanson/async/master/robots.csv' AS row
 MERGE (robot:Robot {id: row.id})
-  ON CREATE SET robot.fuelLevel = toInteger(row.fuelLevel)
+  ON CREATE SET robot.name = row.name, robot.fuelType = row.fuelType, robot.fuelLevel = toInteger(row.fuelLevel), robot.imageUrl = row.imageUrl
+
+  (Suppose I leave off a property or get the form wrong? ---> Change ON CREATE to ON MATCH)
+
+LOAD CSV WITH HEADERS FROM 'https://raw.githubusercontent.com/GracieIngermanson/async/master/projects.csv' AS row
+MERGE (project:Project {id: row.id})
+  ON CREATE SET project.title = row.title, project.deadline = apoc.date.parse(row.deadline), project.priority = toInteger(row.priority), project.completed = toBoolean(row.completed)
+
+CALL db.schema.visualization()
+
+LOAD CSV WITH HEADERS FROM 'https://raw.githubusercontent.com/GracieIngermanson/async/master/schedule.csv' AS row
+MATCH (robot:Robot {id: row.robotId})
+MATCH (project:Project {id: row.projectId})
+MERGE (robot) -[:ASSIGNED_TO]-> (project)
+RETURN *
